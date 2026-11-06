@@ -1,3 +1,2 @@
 #Investigation Manager writeup
 
-
