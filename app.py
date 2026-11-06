@@ -10,9 +10,6 @@ DATA_FILE = "data/investigations.json"
 
 
 def load_cases():
-    """
-    Load all investigation cases from storage.
-    """
 
     if not os.path.exists(DATA_FILE):
         return []
@@ -22,9 +19,6 @@ def load_cases():
 
 
 def save_cases(cases):
-    """
-    Save investigation cases.
-    """
 
     with open(DATA_FILE, "w") as file:
         json.dump(cases, file, indent=4)
@@ -55,6 +49,24 @@ def create_case():
     }
 
     cases.append(new_case)
+
+    save_cases(cases)
+
+    return redirect("/")
+
+
+@app.route("/update_status", methods=["POST"])
+def update_status():
+
+    case_id = request.form["case_id"]
+    new_status = request.form["status"]
+
+    cases = load_cases()
+
+    for case in cases:
+        if case["case_id"] == case_id:
+            case["status"] = new_status
+            break
 
     save_cases(cases)
 

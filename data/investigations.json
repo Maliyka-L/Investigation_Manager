@@ -3,28 +3,28 @@
         "case_id": "382d0361",
         "title": "Suspicious PowerShell Activity",
         "severity": "High",
-        "status": "Open",
+        "status": "In Progress",
         "created": "2026-11-05 17:59:54"
     },
     {
         "case_id": "3d1a59d5",
         "title": "Multiple Failed Login Attempts",
         "severity": "Medium",
-        "status": "Open",
+        "status": "Escalated",
         "created": "2026-11-05 18:00:14"
     },
     {
         "case_id": "15beaf0b",
         "title": " Potential Command and Control Traffic",
         "severity": "Critical",
-        "status": "Open",
+        "status": "In Progress",
         "created": "2026-11-05 18:00:29"
     },
     {
         "case_id": "4fa74f5b",
         "title": "Unusual Account Activity",
         "severity": "Low",
-        "status": "Open",
+        "status": "Closed",
         "created": "2026-11-05 18:00:36"
     }
 ]
