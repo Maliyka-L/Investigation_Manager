@@ -1,42 +1,53 @@
 [
     {
-        "case_id": "382d0361",
-        "title": "Suspicious PowerShell Activity",
+        "case_id": "22c34598",
+        "title": "Suspicious Powershell Activity",
         "severity": "High",
-        "status": "In Progress",
-        "created": "2026-11-05 17:59:54",
-        "notes": [
-            {
-                "timestamp": "2026-11-06 20:32:09",
-                "text": "Encoded PowerShell command detected on workstation.\r\nChecked hash against VirusTotal.\r\nEscalated to Incident Response team."
-            }
-        ]
-    },
-    {
-        "case_id": "3d1a59d5",
-        "title": "Multiple Failed Login Attempts",
-        "severity": "Medium",
         "status": "Escalated",
-        "created": "2026-11-05 18:00:14"
-    },
-    {
-        "case_id": "15beaf0b",
-        "title": " Potential Command and Control Traffic",
-        "severity": "Critical",
-        "status": "In Progress",
-        "created": "2026-11-05 18:00:29",
+        "created": "2026-11-07 19:56:51",
         "notes": [
             {
-                "timestamp": "2026-11-06 20:32:35",
-                "text": "Outbound traffic observed to suspicious external IP.\r\nTraffic pattern resembles beaconing behaviour."
+                "timestamp": "2026-11-07 19:57:04",
+                "text": "Encoded PowerShell observed."
+            },
+            {
+                "timestamp": "2026-11-07 19:57:19",
+                "text": "Hash checked against VirusTotal"
+            },
+            {
+                "timestamp": "2026-11-07 19:57:32",
+                "text": "Incident escalated to IR team for containment."
+            }
+        ],
+        "history": [
+            {
+                "timestamp": "2026-11-07 19:56:51",
+                "action": "Case created"
+            },
+            {
+                "timestamp": "2026-11-07 19:56:54",
+                "action": "Status changed to Open"
+            },
+            {
+                "timestamp": "2026-11-07 19:57:04",
+                "action": "Investigation note added"
+            },
+            {
+                "timestamp": "2026-11-07 19:57:08",
+                "action": "Status changed to In Progress"
+            },
+            {
+                "timestamp": "2026-11-07 19:57:19",
+                "action": "Investigation note added"
+            },
+            {
+                "timestamp": "2026-11-07 19:57:23",
+                "action": "Status changed to Escalated"
+            },
+            {
+                "timestamp": "2026-11-07 19:57:32",
+                "action": "Investigation note added"
             }
         ]
-    },
-    {
-        "case_id": "4fa74f5b",
-        "title": "Unusual Account Activity",
-        "severity": "Low",
-        "status": "Closed",
-        "created": "2026-11-05 18:00:36"
     }
 ]
