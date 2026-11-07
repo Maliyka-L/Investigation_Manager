@@ -4,7 +4,13 @@
         "title": "Suspicious PowerShell Activity",
         "severity": "High",
         "status": "In Progress",
-        "created": "2026-11-05 17:59:54"
+        "created": "2026-11-05 17:59:54",
+        "notes": [
+            {
+                "timestamp": "2026-11-06 20:32:09",
+                "text": "Encoded PowerShell command detected on workstation.\r\nChecked hash against VirusTotal.\r\nEscalated to Incident Response team."
+            }
+        ]
     },
     {
         "case_id": "3d1a59d5",
@@ -18,7 +24,13 @@
         "title": " Potential Command and Control Traffic",
         "severity": "Critical",
         "status": "In Progress",
-        "created": "2026-11-05 18:00:29"
+        "created": "2026-11-05 18:00:29",
+        "notes": [
+            {
+                "timestamp": "2026-11-06 20:32:35",
+                "text": "Outbound traffic observed to suspicious external IP.\r\nTraffic pattern resembles beaconing behaviour."
+            }
+        ]
     },
     {
         "case_id": "4fa74f5b",

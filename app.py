@@ -45,7 +45,8 @@ def create_case():
         "title": request.form["title"],
         "severity": request.form["severity"],
         "status": "Open",
-        "created": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        "created": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "notes": []
     }
 
     cases.append(new_case)
@@ -66,6 +67,34 @@ def update_status():
     for case in cases:
         if case["case_id"] == case_id:
             case["status"] = new_status
+
+    save_cases(cases)
+
+    return redirect("/")
+
+
+@app.route("/add_note", methods=["POST"])
+def add_note():
+
+    case_id = request.form["case_id"]
+    note_text = request.form["note"]
+
+    cases = load_cases()
+
+    for case in cases:
+
+        if case["case_id"] == case_id:
+
+            note = {
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "text": note_text
+            }
+
+            if "notes" not in case:
+                case["notes"] = []
+
+            case["notes"].append(note)
+
             break
 
     save_cases(cases)
