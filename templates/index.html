@@ -126,6 +126,7 @@
                 <th>Severity</th>
                 <th>Status</th>
                 <th>Investigation Notes</th>
+                <th>View</th>
                 <th>Case History</th>
             </tr>
 
@@ -220,6 +221,16 @@
                         {% endfor %}
 
                     {% endif %}
+
+                </td>
+
+                <td>
+
+                    <a href="/case/{{ case.case_id }}">
+                        <button>
+                            View Case
+                        </button>
+                    </a>
 
                 </td>
 
