@@ -10,7 +10,7 @@ DATA_FILE = "data/investigations.json"
 
 
 def load_cases():
-    # Load all investigation cases from storage
+    # Load investigation data
 
     if not os.path.exists(DATA_FILE):
         return []
@@ -54,6 +54,23 @@ def case_details(case_id):
     return "Case not found"
 
 
+@app.route("/report/<case_id>")
+def generate_report(case_id):
+
+    cases = load_cases()
+
+    for case in cases:
+
+        if case["case_id"] == case_id:
+
+            return render_template(
+                "report.html",
+                case=case
+            )
+
+    return "Case not found"
+
+
 @app.route("/create_case", methods=["POST"])
 def create_case():
 
@@ -69,7 +86,7 @@ def create_case():
         "created": created_time,
         "notes": [],
 
-        # Store important events for auditing
+        # Track important actions for auditing
         "history": [
             {
                 "timestamp": created_time,
@@ -99,7 +116,6 @@ def update_status():
 
             case["status"] = new_status
 
-            # Record status changes in the timeline
             case.setdefault("history", []).append(
                 {
                     "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -134,7 +150,6 @@ def add_note():
             case.setdefault("notes", [])
             case["notes"].append(note)
 
-            # Log note activity in the audit trail
             case.setdefault("history", []).append(
                 {
                     "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),

@@ -4,7 +4,6 @@
 <head>
 
     <meta charset="UTF-8">
-
     <title>Investigation Case</title>
 
     <style>
@@ -46,6 +45,7 @@
             border:none;
             padding:10px 20px;
             cursor:pointer;
+            margin-right:10px;
         }
 
         button:hover{
@@ -60,6 +60,10 @@
 
     <a href="/">
         <button>Back to Dashboard</button>
+    </a>
+
+    <a href="/report/{{ case.case_id }}">
+        <button>Generate Report</button>
     </a>
 
     <div class="card">
@@ -87,9 +91,7 @@
             <div class="timeline-item">
 
                 <div class="timestamp">
-
                     {{ note.timestamp }}
-
                 </div>
 
                 {{ note.text }}
@@ -110,25 +112,19 @@
 
         <h2>Case History</h2>
 
-        {% if case.history %}
+        {% for event in case.history %}
 
-            {% for event in case.history %}
+        <div class="timeline-item">
 
-            <div class="timeline-item">
-
-                <div class="timestamp">
-
-                    {{ event.timestamp }}
-
-                </div>
-
-                {{ event.action }}
-
+            <div class="timestamp">
+                {{ event.timestamp }}
             </div>
 
-            {% endfor %}
+            {{ event.action }}
 
-        {% endif %}
+        </div>
+
+        {% endfor %}
 
     </div>
 

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Investigation Report</title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#f3f4f6;
+            margin:40px;
+        }
+
+        .report{
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            color:#111827;
+        }
+
+        h2{
+            margin-top:30px;
+            color:#1f2937;
+        }
+
+        .section{
+            margin-bottom:20px;
+        }
+
+        .timeline-item{
+            background:#f8fafc;
+            padding:10px;
+            border-radius:5px;
+            margin-bottom:10px;
+        }
+
+        .timestamp{
+            color:gray;
+            font-size:12px;
+            margin-bottom:5px;
+        }
+
+        button{
+            background:#2563eb;
+            color:white;
+            border:none;
+            padding:10px 20px;
+            cursor:pointer;
+            margin-bottom:20px;
+        }
+
+        button:hover{
+            background:#1d4ed8;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <a href="/case/{{ case.case_id }}">
+        <button>
+            Back To Case
+        </button>
+    </a>
+
+    <div class="report">
+
+        <h1>Investigation Report</h1>
+
+        <div class="section">
+
+            <p><strong>Case ID:</strong> {{ case.case_id }}</p>
+
+            <p><strong>Title:</strong> {{ case.title }}</p>
+
+            <p><strong>Severity:</strong> {{ case.severity }}</p>
+
+            <p><strong>Status:</strong> {{ case.status }}</p>
+
+            <p><strong>Created:</strong> {{ case.created }}</p>
+
+        </div>
+
+        <h2>Investigation Findings</h2>
+
+        {% if case.notes %}
+
+            {% for note in case.notes %}
+
+            <div class="timeline-item">
+
+                <div class="timestamp">
+                    {{ note.timestamp }}
+                </div>
+
+                {{ note.text }}
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No investigation notes available.</p>
+
+        {% endif %}
+
+        <h2>Case Timeline</h2>
+
+        {% if case.history %}
+
+            {% for event in case.history %}
+
+            <div class="timeline-item">
+
+                <div class="timestamp">
+                    {{ event.timestamp }}
+                </div>
+
+                {{ event.action }}
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No case history available.</p>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>

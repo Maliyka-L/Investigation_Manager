@@ -79,6 +79,10 @@
             margin-bottom:5px;
         }
 
+        .view-btn{
+            text-decoration:none;
+        }
+
     </style>
 
 </head>
@@ -100,10 +104,12 @@
                 required>
 
             <select name="severity">
+
                 <option>Low</option>
                 <option>Medium</option>
                 <option>High</option>
                 <option>Critical</option>
+
             </select>
 
             <button type="submit">
@@ -226,10 +232,14 @@
 
                 <td>
 
-                    <a href="/case/{{ case.case_id }}">
-                        <button>
+                    <a
+                        class="view-btn"
+                        href="/case/{{ case.case_id }}">
+
+                        <button type="button">
                             View Case
                         </button>
+
                     </a>
 
                 </td>
