@@ -10,7 +10,7 @@ DATA_FILE = "data/investigations.json"
 
 
 def load_cases():
-    # Load investigation data
+    # Load investigation data from JSON storage
 
     if not os.path.exists(DATA_FILE):
         return []
@@ -31,9 +31,36 @@ def dashboard():
 
     cases = load_cases()
 
+    # Dashboard metrics
+    total_cases = len(cases)
+
+    open_cases = len(
+        [case for case in cases if case["status"] == "Open"]
+    )
+
+    escalated_cases = len(
+        [case for case in cases if case["status"] == "Escalated"]
+    )
+
+    closed_cases = len(
+        [case for case in cases if case["status"] == "Closed"]
+    )
+
+    high_priority_cases = len(
+        [
+            case for case in cases
+            if case["severity"] in ["High", "Critical"]
+        ]
+    )
+
     return render_template(
         "index.html",
-        cases=cases
+        cases=cases,
+        total_cases=total_cases,
+        open_cases=open_cases,
+        escalated_cases=escalated_cases,
+        closed_cases=closed_cases,
+        high_priority_cases=high_priority_cases
     )
 
 
@@ -86,7 +113,7 @@ def create_case():
         "created": created_time,
         "notes": [],
 
-        # Track important actions for auditing
+        # Keep a history of important investigation actions
         "history": [
             {
                 "timestamp": created_time,
@@ -116,6 +143,7 @@ def update_status():
 
             case["status"] = new_status
 
+            # Record status changes in the audit trail
             case.setdefault("history", []).append(
                 {
                     "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -150,6 +178,7 @@ def add_note():
             case.setdefault("notes", [])
             case["notes"].append(note)
 
+            # Add note activity to the timeline
             case.setdefault("history", []).append(
                 {
                     "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),

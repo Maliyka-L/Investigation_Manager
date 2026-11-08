@@ -18,6 +18,31 @@
             color:#1f2937;
         }
 
+        .metrics-container{
+            display:flex;
+            gap:20px;
+            flex-wrap:wrap;
+            margin-bottom:20px;
+        }
+
+        .metric-card{
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 2px 8px rgba(0,0,0,0.1);
+            min-width:180px;
+        }
+
+        .metric-card h3{
+            color:#6b7280;
+            margin-bottom:10px;
+        }
+
+        .metric-card h2{
+            color:#111827;
+            margin:0;
+        }
+
         .card{
             background:white;
             padding:20px;
@@ -79,10 +104,6 @@
             margin-bottom:5px;
         }
 
-        .view-btn{
-            text-decoration:none;
-        }
-
     </style>
 
 </head>
@@ -90,6 +111,35 @@
 <body>
 
     <h1>SOC Investigation Manager</h1>
+
+    <div class="metrics-container">
+
+        <div class="metric-card">
+            <h3>Total Cases</h3>
+            <h2>{{ total_cases }}</h2>
+        </div>
+
+        <div class="metric-card">
+            <h3>Open Cases</h3>
+            <h2>{{ open_cases }}</h2>
+        </div>
+
+        <div class="metric-card">
+            <h3>Escalated Cases</h3>
+            <h2>{{ escalated_cases }}</h2>
+        </div>
+
+        <div class="metric-card">
+            <h3>Closed Cases</h3>
+            <h2>{{ closed_cases }}</h2>
+        </div>
+
+        <div class="metric-card">
+            <h3>High / Critical</h3>
+            <h2>{{ high_priority_cases }}</h2>
+        </div>
+
+    </div>
 
     <div class="card">
 
@@ -157,25 +207,13 @@
 
                         <select name="status">
 
-                            <option value="Open"
-                            {% if case.status == "Open" %}selected{% endif %}>
-                            Open
-                            </option>
+                            <option value="Open" {% if case.status == "Open" %}selected{% endif %}>Open</option>
 
-                            <option value="In Progress"
-                            {% if case.status == "In Progress" %}selected{% endif %}>
-                            In Progress
-                            </option>
+                            <option value="In Progress" {% if case.status == "In Progress" %}selected{% endif %}>In Progress</option>
 
-                            <option value="Escalated"
-                            {% if case.status == "Escalated" %}selected{% endif %}>
-                            Escalated
-                            </option>
+                            <option value="Escalated" {% if case.status == "Escalated" %}selected{% endif %}>Escalated</option>
 
-                            <option value="Closed"
-                            {% if case.status == "Closed" %}selected{% endif %}>
-                            Closed
-                            </option>
+                            <option value="Closed" {% if case.status == "Closed" %}selected{% endif %}>Closed</option>
 
                         </select>
 
@@ -232,9 +270,7 @@
 
                 <td>
 
-                    <a
-                        class="view-btn"
-                        href="/case/{{ case.case_id }}">
+                    <a href="/case/{{ case.case_id }}">
 
                         <button type="button">
                             View Case
