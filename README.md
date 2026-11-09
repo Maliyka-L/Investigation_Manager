@@ -1,7 +1,5 @@
 # SOC Investigation Manager
 
-> Part of the **ThreatHunter SIEM** project, module 4 of 7: Investigation & Case Management.
-
 A case management tool for SOC investigations, built with Python and Flask. Analysts can open cases for security alerts, assign them, track their status, record findings, attach indicators of compromise (IOCs), tag MITRE ATT&CK techniques and generate a report. Every action is recorded in an audit trail.
 
 ## Features
