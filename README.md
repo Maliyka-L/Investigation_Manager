@@ -90,6 +90,3 @@ This is a local, single-user portfolio project. Before using it anywhere shared,
 - Search and filtering on the dashboard
 - Exporting reports to PDF
 
-## What I learned
-
-_Add 3–5 points here, for example how an audit trail supports investigations, or validating user input in Flask._
