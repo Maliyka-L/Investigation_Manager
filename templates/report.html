@@ -88,7 +88,45 @@
 
             <p><strong>Created:</strong> {{ case.created }}</p>
 
+                <p><strong>Assigned To:</strong> {{ case.assigned_to or "Unassigned" }}</p>
+
         </div>
+
+        <h2>Indicators of Compromise</h2>
+
+        {% if case.iocs %}
+
+            {% for ioc in case.iocs %}
+
+            <div class="timeline-item">
+
+                <div class="timestamp">
+                    {{ ioc.added }}
+                </div>
+
+                <strong>{{ ioc.type }}:</strong> {{ ioc.value }}
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No IOCs recorded.</p>
+
+        {% endif %}
+
+        <h2>MITRE ATT&amp;CK Techniques</h2>
+
+        {% if case.mitre %}
+
+            <p>{{ case.mitre | join(", ") }}</p>
+
+        {% else %}
+
+            <p>No techniques tagged.</p>
+
+        {% endif %}
 
         <h2>Investigation Findings</h2>
 

@@ -4,6 +4,7 @@
         "title": "Suspicious Powershell Activity",
         "severity": "High",
         "status": "Escalated",
+        "assigned_to": "Maliyka",
         "created": "2026-11-07 19:56:51",
         "notes": [
             {
@@ -19,22 +20,54 @@
                 "text": "Incident escalated to IR team for containment."
             }
         ],
+        "iocs": [
+            {
+                "type": "IP",
+                "value": "203.0.113.45",
+                "added": "2026-11-07 19:57:10"
+            },
+            {
+                "type": "Domain",
+                "value": "malicious-update.example",
+                "added": "2026-11-07 19:57:12"
+            }
+        ],
+        "mitre": [
+            "T1059.001",
+            "T1027"
+        ],
         "history": [
             {
                 "timestamp": "2026-11-07 19:56:51",
                 "action": "Case created"
             },
             {
-                "timestamp": "2026-11-07 19:56:54",
-                "action": "Status changed to Open"
+                "timestamp": "2026-11-07 19:56:55",
+                "action": "Case assigned to Maliyka"
             },
             {
                 "timestamp": "2026-11-07 19:57:04",
                 "action": "Investigation note added"
             },
             {
+                "timestamp": "2026-11-07 19:57:06",
+                "action": "MITRE ATT&CK technique tagged: T1059.001"
+            },
+            {
+                "timestamp": "2026-11-07 19:57:07",
+                "action": "MITRE ATT&CK technique tagged: T1027"
+            },
+            {
                 "timestamp": "2026-11-07 19:57:08",
-                "action": "Status changed to In Progress"
+                "action": "Status changed from Open to In Progress"
+            },
+            {
+                "timestamp": "2026-11-07 19:57:10",
+                "action": "IOC added: IP 203.0.113.45"
+            },
+            {
+                "timestamp": "2026-11-07 19:57:12",
+                "action": "IOC added: Domain malicious-update.example"
             },
             {
                 "timestamp": "2026-11-07 19:57:19",
@@ -42,7 +75,7 @@
             },
             {
                 "timestamp": "2026-11-07 19:57:23",
-                "action": "Status changed to Escalated"
+                "action": "Status changed from In Progress to Escalated"
             },
             {
                 "timestamp": "2026-11-07 19:57:32",

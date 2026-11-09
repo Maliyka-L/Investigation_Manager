@@ -52,6 +52,54 @@
             background:#1d4ed8;
         }
 
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-bottom:15px;
+        }
+
+        th{
+            background:#111827;
+            color:white;
+        }
+
+        th,
+        td{
+            border:1px solid #d1d5db;
+            padding:10px;
+            text-align:left;
+        }
+
+        .mono{
+            font-family: Consolas, monospace;
+            word-break: break-all;
+        }
+
+        .inline-form{
+            display:flex;
+            gap:10px;
+            margin-top:15px;
+            flex-wrap:wrap;
+        }
+
+        .inline-form input,
+        .inline-form select{
+            padding:10px;
+            flex:1;
+            min-width:150px;
+        }
+
+        .tag{
+            display:inline-block;
+            background:#fee2e2;
+            color:#991b1b;
+            padding:6px 12px;
+            border-radius:15px;
+            margin:0 8px 8px 0;
+            text-decoration:none;
+            font-weight:bold;
+        }
+
     </style>
 
 </head>
@@ -77,6 +125,116 @@
         <p><strong>Status:</strong> {{ case.status }}</p>
 
         <p><strong>Created:</strong> {{ case.created }}</p>
+
+        <p><strong>Assigned To:</strong> {{ case.assigned_to or "Unassigned" }}</p>
+
+        <form action="/assign" method="POST" class="inline-form">
+
+            <input type="hidden" name="case_id" value="{{ case.case_id }}">
+
+            <input
+                type="text"
+                name="assigned_to"
+                value="{{ case.assigned_to or '' }}"
+                placeholder="Analyst name"
+                maxlength="100">
+
+            <button type="submit">Assign</button>
+
+        </form>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Indicators of Compromise (IOCs)</h2>
+
+        {% if case.iocs %}
+
+            <table>
+
+                <tr>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Added</th>
+                </tr>
+
+                {% for ioc in case.iocs %}
+
+                <tr>
+                    <td>{{ ioc.type }}</td>
+                    <td class="mono">{{ ioc.value }}</td>
+                    <td>{{ ioc.added }}</td>
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        {% else %}
+
+            <p>No IOCs recorded.</p>
+
+        {% endif %}
+
+        <form action="/add_ioc" method="POST" class="inline-form">
+
+            <input type="hidden" name="case_id" value="{{ case.case_id }}">
+
+            <select name="ioc_type">
+                {% for ioc_type in ioc_types %}
+                <option>{{ ioc_type }}</option>
+                {% endfor %}
+            </select>
+
+            <input
+                type="text"
+                name="ioc_value"
+                placeholder="e.g. 203.0.113.5, evil.example, or a SHA256 hash"
+                required>
+
+            <button type="submit">Add IOC</button>
+
+        </form>
+
+    </div>
+
+    <div class="card">
+
+        <h2>MITRE ATT&amp;CK Techniques</h2>
+
+        {% if case.mitre %}
+
+            {% for technique in case.mitre %}
+
+            <a
+                class="tag"
+                href="https://attack.mitre.org/techniques/{{ technique | replace('.', '/') }}/"
+                target="_blank"
+                rel="noopener noreferrer">{{ technique }}</a>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No techniques tagged.</p>
+
+        {% endif %}
+
+        <form action="/add_mitre" method="POST" class="inline-form">
+
+            <input type="hidden" name="case_id" value="{{ case.case_id }}">
+
+            <input
+                type="text"
+                name="technique"
+                placeholder="e.g. T1059.001"
+                pattern="[Tt][0-9]{4}(\.[0-9]{3})?"
+                required>
+
+            <button type="submit">Tag Technique</button>
+
+        </form>
 
     </div>
 
