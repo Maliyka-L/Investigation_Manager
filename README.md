@@ -85,16 +85,6 @@ This is a local, single-user portfolio project. Before using it anywhere shared,
 - CSRF protection on web forms (for example Flask-WTF)
 - A database instead of a JSON file, to handle several users safely
 
-## ThreatHunter SIEM roadmap
-
-1. Log Analysis ✅ ([log_parser_alerting_tool](https://github.com/Maliyka-L/log_parser_alerting_tool))
-2. Alert Engine ✅ ([alert_engine](https://github.com/Maliyka-L/alert_engine))
-3. Threat Intelligence ✅ ([Threat_Intelligence_module](https://github.com/Maliyka-L/Threat_Intelligence_module))
-4. Investigation ✅ (this repo)
-5. Case Management ✅ (this repo: IOCs, MITRE tagging, analyst assignment)
-6. Dashboard
-7. SIEM Integration
-
 ## Future improvements
 
 - Search and filtering on the dashboard
