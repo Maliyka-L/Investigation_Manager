@@ -89,6 +89,25 @@
             min-width:150px;
         }
 
+        textarea{
+            width:100%;
+            padding:10px;
+            margin:10px 0;
+            box-sizing:border-box;
+        }
+
+        .escalation-item{
+            border-left:4px solid #dc2626;
+        }
+
+        .escalate-button{
+            background:#dc2626;
+        }
+
+        .escalate-button:hover{
+            background:#b91c1c;
+        }
+
         .tag{
             display:inline-block;
             background:#fee2e2;
@@ -142,6 +161,65 @@
             <button type="submit">Assign</button>
 
         </form>
+
+    </div>
+
+    <div class="card" id="escalation">
+
+        <h2>Escalation</h2>
+
+        {% if case.escalations %}
+
+            {% for escalation in case.escalations %}
+
+            <div class="timeline-item escalation-item">
+
+                <div class="timestamp">
+                    {{ escalation.timestamp }}
+                </div>
+
+                <strong>Escalated to:</strong> {{ escalation.escalated_to }}<br>
+                <strong>Escalated by:</strong> {{ escalation.escalated_by }}<br>
+                <strong>Reason:</strong> {{ escalation.reason }}
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>This case has not been escalated.</p>
+
+        {% endif %}
+
+        {% if case.status != "Closed" %}
+
+        <form action="/escalate" method="POST">
+
+            <input type="hidden" name="case_id" value="{{ case.case_id }}">
+
+            <div class="inline-form">
+
+                <select name="escalated_to" required>
+                    {% for team in escalation_teams %}
+                    <option>{{ team }}</option>
+                    {% endfor %}
+                </select>
+
+            </div>
+
+            <textarea
+                name="reason"
+                rows="3"
+                maxlength="1000"
+                placeholder="Reason for escalation, e.g. confirmed malicious activity needing containment"
+                required></textarea>
+
+            <button type="submit" class="escalate-button">Escalate Case</button>
+
+        </form>
+
+        {% endif %}
 
     </div>
 

@@ -36,6 +36,14 @@
             "T1059.001",
             "T1027"
         ],
+        "escalations": [
+            {
+                "timestamp": "2026-11-07 19:57:23",
+                "escalated_to": "Incident Response Team",
+                "escalated_by": "Maliyka",
+                "reason": "Encoded PowerShell confirmed as malicious. Host needs containment."
+            }
+        ],
         "history": [
             {
                 "timestamp": "2026-11-07 19:56:51",
@@ -76,6 +84,10 @@
             {
                 "timestamp": "2026-11-07 19:57:23",
                 "action": "Status changed from In Progress to Escalated"
+            },
+            {
+                "timestamp": "2026-11-07 19:57:23",
+                "action": "Escalated to Incident Response Team: Encoded PowerShell confirmed as malicious. Host needs containment."
             },
             {
                 "timestamp": "2026-11-07 19:57:32",

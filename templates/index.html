@@ -91,6 +91,15 @@
             background:#1d4ed8;
         }
 
+        .escalate-button{
+            background:#dc2626;
+            margin-top:8px;
+        }
+
+        .escalate-button:hover{
+            background:#b91c1c;
+        }
+
         .note-box{
             background:#f8fafc;
             padding:10px;
@@ -225,7 +234,9 @@
 
                             <option value="In Progress" {% if case.status == "In Progress" %}selected{% endif %}>In Progress</option>
 
-                            <option value="Escalated" {% if case.status == "Escalated" %}selected{% endif %}>Escalated</option>
+                            {% if case.status == "Escalated" %}
+                            <option value="Escalated" selected disabled>Escalated</option>
+                            {% endif %}
 
                             <option value="Closed" {% if case.status == "Closed" %}selected{% endif %}>Closed</option>
 
@@ -236,6 +247,22 @@
                         </button>
 
                     </form>
+
+                    {% if case.status != "Escalated" and case.status != "Closed" %}
+
+                    <a href="/case/{{ case.case_id }}#escalation">
+                        <button type="button" class="escalate-button">
+                            Escalate
+                        </button>
+                    </a>
+
+                    {% elif case.status == "Escalated" and case.escalations %}
+
+                    <div class="note-time">
+                        Escalated to {{ case.escalations[-1].escalated_to }}
+                    </div>
+
+                    {% endif %}
 
                 </td>
 

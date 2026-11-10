@@ -92,6 +92,32 @@
 
         </div>
 
+        <h2>Escalation</h2>
+
+        {% if case.escalations %}
+
+            {% for escalation in case.escalations %}
+
+            <div class="timeline-item">
+
+                <div class="timestamp">
+                    {{ escalation.timestamp }}
+                </div>
+
+                <strong>Escalated to:</strong> {{ escalation.escalated_to }}<br>
+                <strong>Escalated by:</strong> {{ escalation.escalated_by }}<br>
+                <strong>Reason:</strong> {{ escalation.reason }}
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>This case was not escalated.</p>
+
+        {% endif %}
+
         <h2>Indicators of Compromise</h2>
 
         {% if case.iocs %}

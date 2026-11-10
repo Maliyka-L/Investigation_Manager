@@ -14,11 +14,18 @@ DATA_FILE = os.path.join("data", "investigations.json")
 ALLOWED_SEVERITIES = ["Low", "Medium", "High", "Critical"]
 ALLOWED_STATUSES = ["Open", "In Progress", "Escalated", "Closed"]
 ALLOWED_IOC_TYPES = ["IP", "Domain", "URL", "Hash"]
+ESCALATION_TEAMS = [
+    "Tier 2 Analyst",
+    "Incident Response Team",
+    "SOC Manager",
+    "Threat Intelligence Team"
+]
 
 MAX_TITLE_LENGTH = 200
 MAX_NOTE_LENGTH = 5000
 MAX_NAME_LENGTH = 100
 MAX_IOC_LENGTH = 2048
+MAX_REASON_LENGTH = 1000
 
 # Patterns used to validate input
 DOMAIN_PATTERN = re.compile(r"^(?=.{1,253}$)([a-zA-Z0-9-]{1,63}\.)+[a-zA-Z]{2,63}$")
@@ -26,7 +33,7 @@ HASH_PATTERN = re.compile(r"^([a-fA-F0-9]{32}|[a-fA-F0-9]{40}|[a-fA-F0-9]{64})$"
 MITRE_PATTERN = re.compile(r"^T\d{4}(\.\d{3})?$")  # e.g. T1059 or T1059.001
 
 
-#Helpers
+# ---------- Helpers ----------
 
 def now():
     # Single place to format timestamps
@@ -146,6 +153,7 @@ def build_case(title, severity, assigned_to=""):
         "notes": [],
         "iocs": [],
         "mitre": [],
+        "escalations": [],
 
         # Keep a history of important investigation actions
         "history": [
@@ -157,7 +165,7 @@ def build_case(title, severity, assigned_to=""):
     }
 
 
-#Web pages
+# ---------- Web pages ----------
 
 @app.route("/")
 def dashboard():
@@ -195,7 +203,12 @@ def case_details(case_id):
     if case is None:
         abort(404, description="Case not found")
 
-    return render_template("case.html", case=case, ioc_types=ALLOWED_IOC_TYPES)
+    return render_template(
+        "case.html",
+        case=case,
+        ioc_types=ALLOWED_IOC_TYPES,
+        escalation_teams=ESCALATION_TEAMS
+    )
 
 
 @app.route("/report/<case_id>")
@@ -209,7 +222,7 @@ def generate_report(case_id):
     return render_template("report.html", case=case)
 
 
-#Form actions
+# ---------- Form actions ----------
 
 @app.route("/create_case", methods=["POST"])
 def create_case():
@@ -243,6 +256,10 @@ def update_status():
 
     if new_status not in ALLOWED_STATUSES:
         abort(400, description="Invalid status")
+
+    # Escalating needs a team and a reason, so it has its own form
+    if new_status == "Escalated":
+        abort(400, description="Use the Escalate form on the case page to escalate a case")
 
     cases = load_cases()
     case = find_case(cases, case_id)
@@ -285,6 +302,48 @@ def add_note():
     save_cases(cases)
 
     return redirect(url_for("dashboard"))
+
+
+@app.route("/escalate", methods=["POST"])
+def escalate_case():
+
+    case_id = request.form.get("case_id", "")
+    escalated_to = request.form.get("escalated_to", "")
+    reason = request.form.get("reason", "").strip()
+
+    # Escalations must go to a known team and always include a reason
+    if escalated_to not in ESCALATION_TEAMS:
+        abort(400, description="Choose a valid team to escalate to")
+
+    if not reason or len(reason) > MAX_REASON_LENGTH:
+        abort(400, description="A reason is required to escalate (max 1000 characters)")
+
+    cases = load_cases()
+    case = find_case(cases, case_id)
+
+    if case is None:
+        abort(404, description="Case not found")
+
+    if case.get("status") == "Closed":
+        abort(400, description="Closed cases can't be escalated")
+
+    old_status = case.get("status")
+    case["status"] = "Escalated"
+
+    case.setdefault("escalations", []).append(
+        {
+            "timestamp": now(),
+            "escalated_to": escalated_to,
+            "escalated_by": case.get("assigned_to") or "Unassigned",
+            "reason": reason
+        }
+    )
+
+    add_history(case, f"Status changed from {old_status} to Escalated")
+    add_history(case, f"Escalated to {escalated_to}: {reason}")
+    save_cases(cases)
+
+    return redirect(url_for("case_details", case_id=case_id))
 
 
 @app.route("/assign", methods=["POST"])
