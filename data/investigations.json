@@ -5,6 +5,7 @@
         "severity": "High",
         "status": "Escalated",
         "assigned_to": "Maliyka",
+        "source": "Manual",
         "created": "2026-11-07 19:56:51",
         "notes": [
             {
@@ -47,7 +48,7 @@
         "history": [
             {
                 "timestamp": "2026-11-07 19:56:51",
-                "action": "Case created"
+                "action": "Case created (Manual)"
             },
             {
                 "timestamp": "2026-11-07 19:56:55",

@@ -33,7 +33,7 @@ HASH_PATTERN = re.compile(r"^([a-fA-F0-9]{32}|[a-fA-F0-9]{40}|[a-fA-F0-9]{64})$"
 MITRE_PATTERN = re.compile(r"^T\d{4}(\.\d{3})?$")  # e.g. T1059 or T1059.001
 
 
-# ---------- Helpers ----------
+#Helpers
 
 def now():
     # Single place to format timestamps
@@ -165,7 +165,7 @@ def build_case(title, severity, assigned_to=""):
     }
 
 
-# ---------- Web pages ----------
+#Web pages
 
 @app.route("/")
 def dashboard():
@@ -222,7 +222,7 @@ def generate_report(case_id):
     return render_template("report.html", case=case)
 
 
-# ---------- Form actions ----------
+#Form actions
 
 @app.route("/create_case", methods=["POST"])
 def create_case():

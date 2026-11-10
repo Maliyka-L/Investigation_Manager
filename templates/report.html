@@ -88,7 +88,9 @@
 
             <p><strong>Created:</strong> {{ case.created }}</p>
 
-                <p><strong>Assigned To:</strong> {{ case.assigned_to or "Unassigned" }}</p>
+                <p><strong>Source:</strong> {{ case.source or "Manual" }}</p>
+
+            <p><strong>Assigned To:</strong> {{ case.assigned_to or "Unassigned" }}</p>
 
         </div>
 

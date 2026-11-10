@@ -201,6 +201,7 @@
                 <th>Title</th>
                 <th>Severity</th>
                 <th>Assigned To</th>
+                <th>Source</th>
                 <th>Status</th>
                 <th>Investigation Notes</th>
                 <th>View</th>
@@ -218,6 +219,8 @@
                 <td>{{ case.severity }}</td>
 
                 <td>{{ case.assigned_to or "Unassigned" }}</td>
+
+                <td>{{ case.source or "Manual" }}</td>
 
                 <td>
 
